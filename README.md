@@ -4,7 +4,25 @@ A mentoring platform where students book sessions with mentors, and hours only c
 
 ## How to run
 
-Coming soon.
+Requirements: Docker and Java 21.
+
+1. Start the local infrastructure (Postgres 16 + LocalStack with SQS, S3 and SES):
+
+   ```bash
+   cd infra
+   docker compose up -d
+   ```
+
+   LocalStack runs `infra/localstack/init-aws.sh` on startup, which creates the SQS queues (each with a DLQ), the S3 buckets and the verified SES sender.
+
+2. Run the backend with the `local` profile:
+
+   ```bash
+   cd backend
+   ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+   ```
+
+To stop everything and wipe the database: `docker compose down -v` (inside `infra/`).
 
 ## Folder structure
 

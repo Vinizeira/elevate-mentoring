@@ -1,0 +1,39 @@
+name: elevate-mentoring
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: elevate-postgres
+    environment:
+      POSTGRES_DB: elevate
+      POSTGRES_USER: elevate
+      POSTGRES_PASSWORD: elevate
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U elevate -d elevate"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  localstack:
+    image: localstack/localstack:4.9
+    container_name: elevate-localstack
+    environment:
+      SERVICES: sqs,s3,ses
+      AWS_DEFAULT_REGION: us-east-1
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./localstack/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh
+    healthcheck:
+      # The init script creates this marker as its last step, so "healthy" means the resources exist.
+      test: ["CMD-SHELL", "test -f /tmp/init-aws.done"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  postgres-data:
