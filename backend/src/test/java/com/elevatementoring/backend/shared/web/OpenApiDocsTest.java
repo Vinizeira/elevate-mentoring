@@ -30,6 +30,11 @@ class OpenApiDocsTest extends AbstractIntegrationTest {
 	}
 
 	@Test
+	void healthCheckIsPublic() throws Exception {
+		mockMvc.perform(get("/actuator/health")).andExpect(status().isOk());
+	}
+
+	@Test
 	void otherEndpointsRequireAuthentication() throws Exception {
 		mockMvc.perform(get("/anything")).andExpect(status().isUnauthorized());
 	}
