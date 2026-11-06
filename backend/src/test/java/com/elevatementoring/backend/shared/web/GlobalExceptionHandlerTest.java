@@ -12,6 +12,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +52,13 @@ class GlobalExceptionHandlerTest {
 	}
 
 	@Test
+	void optimisticLockFailureReturns409() throws Exception {
+		mockMvc.perform(get("/test/stale"))
+			.andExpect(status().isConflict())
+			.andExpect(jsonPath("$.detail").value("The resource was changed by another request. Try again."));
+	}
+
+	@Test
 	void notFoundExceptionReturns404() throws Exception {
 		mockMvc.perform(get("/test/not-found"))
 			.andExpect(status().isNotFound())
@@ -80,6 +88,11 @@ class GlobalExceptionHandlerTest {
 		@GetMapping("/test/conflict")
 		void conflict() {
 			throw new ConflictException("slot already booked");
+		}
+
+		@GetMapping("/test/stale")
+		void stale() {
+			throw new ObjectOptimisticLockingFailureException(Object.class, 1L);
 		}
 
 		@GetMapping("/test/not-found")
