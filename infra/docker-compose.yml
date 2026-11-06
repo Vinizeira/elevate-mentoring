@@ -23,7 +23,6 @@ services:
     container_name: elevate-localstack
     environment:
       SERVICES: sqs,s3,ses
-      AWS_DEFAULT_REGION: us-east-1
     ports:
       - "4566:4566"
     volumes:
