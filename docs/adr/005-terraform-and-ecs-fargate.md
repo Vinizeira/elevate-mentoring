@@ -5,7 +5,7 @@
 
 ## Context
 
-The MVP must run on AWS by the end of December 2026 using RDS Postgres, SQS, S3 and SES, which the code already uses through LocalStack.
+The MVP must run on AWS by the end of December 2026 using RDS Postgres, SQS, S3 and SES, which local development already emulates with Postgres and LocalStack (`infra/docker-compose.yml`).
 It is a personal project, so monthly cost matters, and the environment should be reproducible and easy to destroy.
 
 ## Decision

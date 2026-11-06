@@ -1,7 +1,7 @@
 # Architecture Decision Records
 
 Short records of the decisions that shape the codebase: context, decision, consequences.
-A decision is never edited after it is accepted; if it changes, a new ADR supersedes it.
+A decision is never changed after it is accepted (only typos and factual errors are fixed); if it changes, a new ADR supersedes it.
 
 | ADR | Decision | Status |
 |---|---|---|
