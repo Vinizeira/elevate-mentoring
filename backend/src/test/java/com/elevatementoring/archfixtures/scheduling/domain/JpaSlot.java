@@ -1,4 +1,4 @@
-package com.elevatementoring.backend.architecture.fixtures.scheduling.domain;
+package com.elevatementoring.archfixtures.scheduling.domain;
 
 import jakarta.persistence.Entity;
 
