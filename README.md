@@ -22,6 +22,8 @@ Requirements: Docker and Java 21.
    ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
    ```
 
+3. Open the API docs (Swagger UI) at http://localhost:8080/swagger-ui.html
+
 To stop everything and wipe the database: `docker compose down -v` (inside `infra/`).
 
 ## Folder structure
